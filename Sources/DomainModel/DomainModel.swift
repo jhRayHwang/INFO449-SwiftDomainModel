@@ -43,14 +43,11 @@ public struct Money {
         return Money(amount: newAmount, currency: to)
     }
     
-    // UPDATED: When adding two Money values with different currencies,
-    // convert self into the currency of the parameter (other) and then add.
     public func add(_ other: Money) -> Money {
         let convertedSelf = self.convert(other.currency)
         return Money(amount: convertedSelf.amount + other.amount, currency: other.currency)
     }
     
-    // Similarly, for subtraction convert self into the currency of 'other'.
     public func subtract(_ other: Money) -> Money {
         let convertedSelf = self.convert(other.currency)
         return Money(amount: convertedSelf.amount - other.amount, currency: other.currency)
@@ -61,8 +58,8 @@ public struct Money {
 public class Job {
     
     public enum JobType {
-        case Hourly(Double)   // Hourly wage (per hour)
-        case Salary(Int)      // Yearly salary amount
+        case Hourly(Double)
+        case Salary(Int)
     }
     
     public var title: String
@@ -74,8 +71,6 @@ public class Job {
     }
     
     // Calculates the income.
-    // For Hourly jobs, the provided hours (defaulting to 2000 when not specified) are multiplied by the hourly wage.
-    // For Salary jobs, any passed parameter is ignored.
     public func calculateIncome(_ hours: Int = 2000) -> Int {
         switch type {
         case .Hourly(let wage):
@@ -128,7 +123,6 @@ public class Person {
     public var job: Job? {
         get { return _job }
         set {
-            // Only assign a job if the person is at least 16 years old.
             if age >= 16 {
                 _job = newValue
             } else {
@@ -156,8 +150,6 @@ public class Person {
         self.age = age
     }
     
-    // Returns a human-readable description of the Person.
-    // Example: "[Person: firstName: Ted lastName: Neward age: 45 job: Salary(1000) spouse: Charlotte]"
     public func toString() -> String {
         let jobStr = job != nil ? "\(job!)" : "nil"
         let spouseStr = spouse != nil ? spouse!.firstName : "nil"
